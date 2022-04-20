@@ -27,15 +27,21 @@ def fibonacci_classic(n):
     """
     a, b = 0, 1
 
-    for _ in range(n):
-        a, b = b + a, a
+    if n >= 0:
+        for _ in range(n):
+            a, b = b + a, a
+    else:
+        for _ in range(abs(n)):
+            a, b = b - a, a
 
     return a
 
 
-def fib(n):
+def fibonacci_binet(n):
     """
     Binet’s formula
+
+    Need some check, not all values round correct
 
     :param n: int - length
     :return: int - result
@@ -44,4 +50,32 @@ def fib(n):
     root_5 = sqrt(5)
     result = (1 / root_5) * (((1 + root_5) / 2) ** n - ((1 - root_5) / 2) ** n)
 
-    return int(result)
+    return round(result)
+
+
+def fib(n):
+    """
+    Computes fib(n) iteratively using fast doubling method
+    """
+
+    sign = n >= 0
+    n = abs(n)
+
+    bin_of_n = bin(n)[2:]
+    f = [0, 1]
+
+    for b in bin_of_n:
+        f2i1 = f[1] ** 2 + f[0] ** 2
+        f2i = f[0] * (2 * f[1] - f[0])
+
+        if b == '0':
+            f[0], f[1] = f2i, f2i1
+        else:
+            f[0], f[1] = f2i1, f2i1 + f2i
+
+    if sign:
+        return f[0]
+    elif n % 2:
+        return f[0]
+    else:
+        return f[0] * -1

@@ -1,4 +1,6 @@
-from main import fib, fibonacci_classic
+from main import fib
+# from main import fibonacci_classic as fib
+from main import fibonacci_classic
 # from main import fibonacci_recursion as fib
 
 
@@ -35,14 +37,22 @@ def test72():
 
 
 def test1000():
-    result = 43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875
-    assert fib(1000) == result
+    assert fib(1000) == fibonacci_classic(1000)
 
 
 def test_neg6():
     assert fib(-6) == -8
 
 
+def test_neg85():
+    assert fib(-85) == 259695496911122585
+
+
 def test_compare_with_classic_solution():
     for number in range(100):
+        assert fib(number) == fibonacci_classic(number)
+
+
+def test_negative_compare_with_classic_solution():
+    for number in range(-100, 0):
         assert fib(number) == fibonacci_classic(number)
